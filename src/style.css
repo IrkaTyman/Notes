@@ -448,6 +448,8 @@ label{
     flex-direction: column;
     position: relative;
   }
+  .top_note_page{
+    flex-direction:row
   .confirm{
     position: absolute;
     top:0.9rem;
