@@ -4,7 +4,7 @@ import {Context} from '../context/context'
 import type {editOrAddPageProps} from '../types'
 
 // Img
-import {pencilLink, removeLink, starLink,postLink,arrowLink} from '../components/images'
+import {pencilLink, removeLink, starLink,arrowLink} from '../components/images'
 
 //Components
 import NavPanel from '../components/NavPanel';

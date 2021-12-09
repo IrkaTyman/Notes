@@ -15,8 +15,8 @@ const sortByDateFilter = (notes:note[]) => {
 
 const sortByPriority = (arr:note[],typeSortPriority:string) => {
     arr.sort((a,b)=> {
-      if (a.priority < b.priority) return typeSortPriority == 'upgrade' ? -1 : 1
-      else if (b.priority < a.priority) return typeSortPriority == 'upgrade' ? 1 : -1
+      if (a.priority < b.priority) return typeSortPriority === 'upgrade' ? -1 : 1
+      else if (b.priority < a.priority) return typeSortPriority === 'upgrade' ? 1 : -1
       return sortByDate(a,b)
     })
     return arr

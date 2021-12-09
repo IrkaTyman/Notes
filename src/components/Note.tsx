@@ -4,12 +4,9 @@ import {pencilLink, removeLink, starLink} from './images'
 import {note,funcWithNote} from '../types'
 import {Context} from '../context/context'
 
-type fuc = {
-    deleteNote:() => void}
-
 function Note({deleteNote,data}:funcWithNote&{data:note}) {
     const ls = window.localStorage
-    const {state,dispatch} = useContext(Context)
+    const {dispatch} = useContext(Context)
     const dateObj = new Date(data.changeTime || data.creationTime || 0)
     const months = ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря']
     const toGoNote = (e:React.MouseEvent<HTMLElement>) => {

@@ -74,10 +74,10 @@ function App() {
     setNotes([...arr])
   }
   return (
-     begin && state.route == 'home' ? <Home afterFilter={setNotesAfterFilter} data={notes} deleteNote={deleteNote}/> 
-     : begin && state.route == 'editNote'  ? <EditOrAddPage editNote = {editNote} deleteNote={deleteNote} />
-     : begin && state.route == 'addNote'  ? <EditOrAddPage addNote = {addNote}/>
-     : begin && state.route == 'oneNote' ? <NotePage deleteNote = {deleteNote}/> : <Loading/>
+     begin && state.route === 'home' ? <Home afterFilter={setNotesAfterFilter} data={notes} deleteNote={deleteNote}/> 
+     : begin && state.route === 'editNote'  ? <EditOrAddPage editNote = {editNote} deleteNote={deleteNote} />
+     : begin && state.route === 'addNote'  ? <EditOrAddPage addNote = {addNote}/>
+     : begin && state.route === 'oneNote' ? <NotePage deleteNote = {deleteNote}/> : <Loading/>
   );
 }
 

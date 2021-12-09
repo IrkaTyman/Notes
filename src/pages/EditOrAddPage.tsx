@@ -4,12 +4,12 @@ import {Context} from '../context/context'
 import type {editOrAddPageProps} from '../types'
 
 // Img
-import {plusLink,postLink,starLink,checkLink} from '../components/images'
+import {plusLink,starLink,checkLink} from '../components/images'
 import NavPanel from '../components/NavPanel';
 
 function EditOrAddPage({deleteNote,addNote,editNote}:editOrAddPageProps) {
     const ls = window.localStorage
-    const {state,dispatch} = useContext(Context)
+    const {state} = useContext(Context)
     const [required,setRequired] = useState(false)
     const [theme,setTheme] = useState<string>(state.note.theme || ls.getItem(state.note.id+'') || '37,100%,72%')
     const [priority,setPriority] = useState<0|1|2>(state.note.priority)
@@ -40,14 +40,14 @@ function EditOrAddPage({deleteNote,addNote,editNote}:editOrAddPageProps) {
                 </div>
                 <div className="container_choice_priority flex ai_c">
                     <h2 className="fs1rem">Приоритет: </h2>
-                    <div className={`circle_with_img ${priority == 0 ? 'active_circle_with_img' : ''}`} onClick={()=> setPriority(0)}></div>
+                    <div className={`circle_with_img ${priority === 0 ? 'active_circle_with_img' : ''}`} onClick={()=> setPriority(0)}></div>
                     <div 
-                    className={`circle_with_img flex ai_c  ${priority == 1 ? 'active_circle_with_img' : ''}`} 
+                    className={`circle_with_img flex ai_c  ${priority === 1 ? 'active_circle_with_img' : ''}`} 
                     onClick={()=> setPriority(1)}>
                         <img src={starLink} alt="priority" />
                     </div>
                     <div 
-                    className={`circle_with_img circle_with_2img flex ai_c jc_sb  ${priority == 2 ? 'active_circle_with_img' : ''}`} 
+                    className={`circle_with_img circle_with_2img flex ai_c jc_sb  ${priority === 2 ? 'active_circle_with_img' : ''}`} 
                     onClick={()=> setPriority(2)}>
                         <img src={starLink} alt="priority" />
                         <img src={starLink} alt="priority" />

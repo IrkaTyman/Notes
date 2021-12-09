@@ -6,7 +6,7 @@ import {sortByDateFilter,sortByPriority} from '../function/sortFunction'
 import {note} from '../types'
 
 // Img
-import {downArrowLink, plusLink,postLink,starLink} from '../components/images'
+import {downArrowLink, plusLink,starLink} from '../components/images'
 
 //Components
 import Note from '../components/Note'
@@ -49,9 +49,9 @@ function Home({deleteNote,afterFilter,data}:homeProps) {
               <p>Сортировать:</p>
               <div className="container_only_filter">
                 <div className="mobile_sort_active" onClick={()=> setActiveFilterBlock(!activeFilterBlock)}>
-                  {typeFilter == 'date' ? 
+                  {typeFilter === 'date' ? 
                     <p className="filter">По дате</p> :
-                    typeFilter=='upgrade' ?
+                    typeFilter==='upgrade' ?
                     <p className="filter upgrade_filter flex ai_c ">
                       По <img src={downArrowLink} alt='sort by upgrade priority'/> приоритета
                     </p> :
