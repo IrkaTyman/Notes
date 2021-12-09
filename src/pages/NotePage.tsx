@@ -36,10 +36,15 @@ function NotePage({deleteNote,addNote,editNote}:editOrAddPageProps) {
                 </div>
             </div>
             <div className="note_field" style={{backgroundColor:`hsl(${state.note.theme||ls.getItem(state.note.id+'')||'37,100%,72%'})`}}>
-                <div className="priority_block circle_with_img circle_with_2img flex ai_c jc_sb 'active_circle_with_img'">
+                {state.note.priority == 2
+                ?<div className="priority_block circle_with_img circle_with_2img flex ai_c jc_sb active_circle_with_img">
                     <img src={starLink} alt="priority" />
                     <img src={starLink} alt="priority" />
                 </div>
+                : state.note.priority == 1
+                ? <div className="priority_block circle_with_img flex ai_c active_circle_with_img">
+                    <img src={starLink} alt="priority" />
+                </div> : null}
                 <h2 className="title_edit">{state.note.title}</h2>
                 <h2 className="description_edit fs1_125rem" dangerouslySetInnerHTML={{__html: state.note.description?.replace(/\n/g,'<br/>') || ''}}></h2>
             </div>
