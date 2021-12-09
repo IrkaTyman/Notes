@@ -61,13 +61,7 @@ function EditOrAddPage({deleteNote,addNote,editNote}:editOrAddPageProps) {
 
             </div>
             {required ? <label htmlFor="title" className='fs1_0.6rem' style={{backgroundColor:`hsl(${theme.slice(0,theme.length-3)}${+theme.slice(-3,-1)-15}%)`}}>Необходимо ввести заголовок</label> : null}
-            <input 
-                required maxLength={30} 
-                id="title" 
-                placeholder='Заголовок' 
-                className="title_edit" 
-                value={title} 
-                onChange={(e) => {
+                        <textarea rows={3} placeholder='Заголовок' required maxLength={30} id="title" className="title_edit fs1_125rem" value={title} onChange={(e) => {
                     setTitle(e.target.value); 
                     setRequired(false)}}/>
             <textarea placeholder='Ваша заметка' className="description_edit fs1_125rem" value={description} onChange={(e) => setDescription(e.target.value)}/>
