@@ -282,12 +282,16 @@ main{
   font-size: 2rem;
   margin-bottom: 2rem;
 }
+.container_edit_add .description_edit,
+.container_edit_add .title_edit
+{
+  width: 100%;
+  word-break: break-all;
+}
 .container_edit_add .description_edit{
+  height: 100%;
   font-size: 1.3rem;
   font-weight: 500;
-  height:100%;
-  width: 100%;
-  word-break:break-all
 }
 label{
   padding: 1rem;
@@ -449,7 +453,8 @@ label{
     position: relative;
   }
   .top_note_page{
-    flex-direction:row
+    flex-direction: row;
+  }
   .confirm{
     position: absolute;
     top:0.9rem;
