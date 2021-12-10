@@ -10,16 +10,16 @@ export type note = {
     theme: string
   }
 export type homeProps = {
-  deleteNote: (id:number) => void,
+  deleteNote: (item:note,callback:Function) => Promise<void>,
   data: note[],
   afterFilter: (arr:note[]) => void,
 }
 
 export type editOrAddPageProps = {
-  deleteNote?: (id:number) => void,
-  addNote?: (item:note) => void,
-  editNote?: (item:note) => void,
+  deleteNote?: (item:note,callback:Function) => Promise<void>,
+  addNote?: (item:note,callback:Function) => Promise<void>,
+  editNote?: (item:note,callback:Function) => Promise<void>,
 }
 export type funcWithNote = {
-  deleteNote: (id:number) => void,
+  deleteNote:(item:note,callback:Function) => Promise<void>,
 }

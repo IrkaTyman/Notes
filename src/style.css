@@ -23,9 +23,10 @@ html{
   justify-content: space-between;
 }
 /********** CURSOR **********/
-.type_priority, .new_note,
+.new_note,
 .container_with_filter .filter,
-.note, .confirm, h2.toHome,
+.note, .confirm, .edit_page .notes_text h2,
+.note_page .notes_text h2,
 .field_with_action,.come_back,
 .logo
 {
@@ -189,6 +190,7 @@ main{
 }
 .title{
   margin-bottom: 0.625rem;
+  word-break: break-all;
 }
 .description p{
   line-height: 1.47; 
@@ -215,7 +217,7 @@ main{
 .container_edit_add{
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   padding:4rem 5rem;
   background-color: #01D4FF;;
   align-items: flex-start;
@@ -319,7 +321,7 @@ label{
 }
 .priority_block{
   position: absolute;
-  top:-1rem;
+  top:-2rem;
   right: 0;
 }
 
@@ -405,11 +407,8 @@ label{
   nav .logo{
     margin-bottom: 0;
   }
-  .notes_text{display: none;}
-  .nav_for_go_home{
-    display: inline;
-    margin-bottom: 0;
-  }
+  .notes_text{margin-bottom: 0;}
+  .home_page .notes_text{display: none;}
   .container_with_filter{margin-left: 0;}
   .container_edit_add{padding:1.5rem}
   .top_panel{padding: 0.9rem;}

@@ -2,12 +2,13 @@ import React,{useState,useContext} from 'react';
 import '../style.css';
 import {Context} from '../context/context'
 import type {editOrAddPageProps} from '../types'
+import { addApi, editApi} from '../function/apiFunction';
 
 // Img
 import {plusLink,starLink,checkLink} from '../components/images'
 import NavPanel from '../components/NavPanel';
 
-function EditOrAddPage({deleteNote,addNote,editNote}:editOrAddPageProps) {
+function EditOrAddPage({addNote,editNote}:editOrAddPageProps) {
     const ls = window.localStorage
     const {state} = useContext(Context)
     const [required,setRequired] = useState(false)
@@ -19,14 +20,14 @@ function EditOrAddPage({deleteNote,addNote,editNote}:editOrAddPageProps) {
 
     const onSubmit = () => {
         if(title){
-            editNote && editNote({id:state.note.id,title,description:description || '',theme,priority,creationTime:state.note.creationTime,changeTime:state.note.changeTime})
-            addNote && addNote({id:state.lastIdOfNote+1,title,description:description || '',theme,priority,creationTime:Date.now()})
+            editNote && editNote({id:state.note.id,title,description:description || '',theme,priority,creationTime:state.note.creationTime,changeTime:state.note.changeTime},editApi)
+            addNote && addNote({id:state.lastIdOfNote+1,title,description:description || '',theme,priority,creationTime:Date.now()},addApi)
         } else {
             setRequired(true)
         }
     }
     return (
-    <div className="App">
+    <div className="App edit_page">
         <NavPanel/>
         <div className="container_edit_add flex" style={{backgroundColor:`hsl(${theme||ls.getItem(state.note.id+'')||'37,100%,72%'})`}}>
             <div className="top_panel flex">
@@ -61,7 +62,7 @@ function EditOrAddPage({deleteNote,addNote,editNote}:editOrAddPageProps) {
 
             </div>
             {required ? <label htmlFor="title" className='fs1_0.6rem' style={{backgroundColor:`hsl(${theme.slice(0,theme.length-3)}${+theme.slice(-3,-1)-15}%)`}}>Необходимо ввести заголовок</label> : null}
-                        <textarea rows={3} placeholder='Заголовок' required maxLength={30} id="title" className="title_edit fs1_125rem" value={title} onChange={(e) => {
+            <textarea rows={3} placeholder='Заголовок' required maxLength={30} id="title" className="title_edit fs1_125rem" value={title} onChange={(e) => {
                     setTitle(e.target.value); 
                     setRequired(false)}}/>
             <textarea placeholder='Ваша заметка' className="description_edit fs1_125rem" value={description} onChange={(e) => setDescription(e.target.value)}/>

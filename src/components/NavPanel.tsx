@@ -9,9 +9,9 @@ function NavPanel({children}:{post?:note}&{children?:React.ReactNode}) {
     return (
         <nav>
         <h1 className="fs1_06rem logo" onClick={()=>dispatch({type:'home'})}>AppNote</h1>
-        <div className={`notes_text jc_sb flex ai_c ${state.route!=='home' ? 'nav_for_go_home' : ''}`}>
+        <div className='notes_text jc_sb flex ai_c'>
             <img src={postLink} alt="note" />
-            <h2 className={`fs1_06rem ${state.route!=='home' ? 'toHome' : ''}`}
+            <h2 className='fs1_06rem '
                 onClick={()=>state.route !== 'home' && dispatch({type:'home'})}>
                 Заметки
             </h2>

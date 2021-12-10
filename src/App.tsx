@@ -1,10 +1,10 @@
-import React,{useState,useEffect,useContext} from 'react';
+import {useState,useEffect,useContext} from 'react';
 import './style.css';
 import Home from './pages/Home'
 import {note} from './types'
 import {sortByDateFilter} from './function/sortFunction'
 import {Context} from './context/context'
-import { loadAllApi, addApi, editApi,deleteApi,loadOneNoteApi } from './function/apiFunction';
+import { loadAllApi, addApi,deleteApi,loadOneNoteApi } from './function/apiFunction';
 import EditOrAddPage from './pages/EditOrAddPage';
 import NotePage from './pages/NotePage';
 import Loading from './pages/Loading';
@@ -19,6 +19,7 @@ function App() {
     async function loadApiForApp(){
       try{
         let data = await loadAllApi()
+        data = data.sort((a:note,b:note) => a.id > b.id ? 1 : -1)
         if(data[0]){
           let lastId = data[data.length-1].id 
           const arr = sortByDateFilter(data)
@@ -32,52 +33,30 @@ function App() {
     loadApiForApp()
   }, [])
 
-  const addNote = async (item:note) => {
-    // Получение newNote сделано, чтобы использовать все ф-ции Api, для функционала необязательно
-    //Работа с Api и LocalStorage
-    await addApi(item)
-    const newNote = await loadOneNoteApi(item.id)
-    localStorage.setItem(item.id+'', item.theme)
+  const actionWithNote = async (note:note,callback: Function) => {
+    await callback(note)   
 
-    const arrNotes:note[] = notes.slice()
-    arrNotes.unshift(newNote)
+    const arrNotes:note[] = callback === addApi ?
+           notes.slice()
+           : notes.filter(item => item.id !==note.id)
+
+    if(callback !== deleteApi){
+      localStorage.setItem(note.id+'', note.theme)
+      const newNote = await loadOneNoteApi(note.id)
+      arrNotes.unshift(newNote)
+    }
     dispatch({type:'home'})
     setNotes(arrNotes)
   }
-  const deleteNote = async (id:number) => {
-    const arrayNotes:note[] = []
-    notes.map((item,i) => {
-      if(item.id !== id) arrayNotes.push(item)
-    })
-    dispatch({type:'home'})
-    await deleteApi(id)
-    setNotes(arrayNotes)
-  }
-  const editNote = async (note:note) => {
-    await editApi(note)
-    // Получение newNote сделано, чтобы использовать все ф-ции Api, для функционала необязательно
-    //Работа с Api и LocalStorage
-    const newNote = await loadOneNoteApi(note.id)
-    localStorage.setItem(note.id+'',note.theme)  
 
-    const arrayNotes:note[] = []
-    notes.map((item) => {
-      if(item.id !== note.id) arrayNotes.push(item)
-      else{
-        arrayNotes.push(newNote)
-      }
-    })   
-    dispatch({type:'home'})  
-    setNotes(arrayNotes)
-  }
   const setNotesAfterFilter = (arr:note[]) => {
     setNotes([...arr])
   }
   return (
-     begin && state.route === 'home' ? <Home afterFilter={setNotesAfterFilter} data={notes} deleteNote={deleteNote}/> 
-     : begin && state.route === 'editNote'  ? <EditOrAddPage editNote = {editNote} deleteNote={deleteNote} />
-     : begin && state.route === 'addNote'  ? <EditOrAddPage addNote = {addNote}/>
-     : begin && state.route === 'oneNote' ? <NotePage deleteNote = {deleteNote}/> : <Loading/>
+     begin && state.route === 'home' ? <Home afterFilter={setNotesAfterFilter} data={notes} deleteNote={actionWithNote}/> 
+     : begin && state.route === 'editNote'  ? <EditOrAddPage editNote = {actionWithNote} />
+     : begin && state.route === 'addNote'  ? <EditOrAddPage addNote = {actionWithNote}/>
+     : begin && state.route === 'oneNote' ? <NotePage deleteNote = {actionWithNote}/> : <Loading/>
   );
 }
 

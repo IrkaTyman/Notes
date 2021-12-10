@@ -24,7 +24,7 @@ export async function loadOneNoteApi(id:number){
 
 export async function addApi(item:note){
     try{
-      await fetch('https://job.hrvr.academy/api/notes/create',{method:'POST',headers: headers, body:JSON.stringify(item)})
+      await fetch('https://job.hrvr.academy/api/notes/create',{method:'POST',mode:'cors',headers: headers, body:JSON.stringify(item)})
     } catch(e) {
       console.warn(e)
     }
@@ -38,9 +38,9 @@ export async function editApi(item:note){
     }
 }
 
-export async function deleteApi(id:number){
+export async function deleteApi(item:note){
     try{
-      await fetch(`https://job.hrvr.academy/api/notes/delete/${id}`,{method:'DELETE',mode: 'cors',body:''})  
+      await fetch(`https://job.hrvr.academy/api/notes/delete/${item.id}`,{method:'DELETE',mode: 'cors',body:''})  
     } catch(e) {
       console.warn(e)
     }
