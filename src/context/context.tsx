@@ -2,7 +2,7 @@ import React, { createContext, useReducer } from "react";
 import type {note} from '../types'
 
 // Types for Context
-type Action = {type:'set_last_id', payload:number} | {type:'home'} | {type:'to_go_page_with_data',payload:{note:note,nameOfPage:'home'|'editNote'|'addNote'|'oneNote'}}
+type Action = {type:'set_last_id', payload:number} |  {type:'set_note',payload:note}
 type State = typeof initialState;
  
 //Initial State
@@ -14,21 +14,15 @@ const initialState:{note:note,route:string,lastIdOfNote:number}= {
 
 function reducer(state:State,action:Action){
     switch(action.type){
-        case 'home':
-            return{
-                ...state,
-                route:'home'
-            }
         case 'set_last_id':
             return{
                 ...state,
                 lastIdOfNote:action.payload
             }
-        case 'to_go_page_with_data':
+        case 'set_note':
             return{
                 ...state,
-                route:action.payload.nameOfPage,
-                note:action.payload.note
+                note:action.payload
             }
     }
 }

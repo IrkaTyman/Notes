@@ -6,6 +6,7 @@ import * as remove from '../assets/delete.png'
 import * as check from '../assets/check.png'
 import * as arrow from '../assets/arrow.png'
 import * as downArrow from '../assets/down-arrow.png'
+import * as detective from '../assets/kitty.png'
 
 const starLink = star.default
 const plusLink = plus.default
@@ -15,5 +16,6 @@ const removeLink = remove.default
 const checkLink = check.default
 const arrowLink = arrow.default
 const downArrowLink = downArrow.default
+const detectiveLink = detective.default
 
-export {arrowLink,starLink,plusLink,postLink,pencilLink,removeLink,checkLink,downArrowLink}
+export {arrowLink,starLink,plusLink,postLink,pencilLink,removeLink,checkLink,downArrowLink,detectiveLink}

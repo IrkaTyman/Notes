@@ -4,7 +4,8 @@ import Home from './pages/Home'
 import {note} from './types'
 import {sortByDateFilter} from './function/sortFunction'
 import {Context} from './context/context'
-import { loadAllApi, addApi,deleteApi,loadOneNoteApi } from './function/apiFunction';
+import { loadAllApi, addApi,deleteApi,loadOneNoteApi} from './function/apiFunction';
+import { Routes, Route,useNavigate} from "react-router-dom";
 import EditOrAddPage from './pages/EditOrAddPage';
 import NotePage from './pages/NotePage';
 import Loading from './pages/Loading';
@@ -14,8 +15,10 @@ function App() {
   const [begin,setBegin] = useState(false)
   const {state,dispatch} = useContext(Context)
   const localStorage = window.localStorage
+  const navigation = useNavigate()
   
   useEffect(()=>{
+    navigation('/')
     async function loadApiForApp(){
       try{
         let data = await loadAllApi()
@@ -45,7 +48,7 @@ function App() {
       const newNote = await loadOneNoteApi(note.id)
       arrNotes.unshift(newNote)
     }
-    dispatch({type:'home'})
+    navigation('/')
     setNotes(arrNotes)
   }
 
@@ -53,10 +56,13 @@ function App() {
     setNotes([...arr])
   }
   return (
-     begin && state.route === 'home' ? <Home afterFilter={setNotesAfterFilter} data={notes} deleteNote={actionWithNote}/> 
-     : begin && state.route === 'editNote'  ? <EditOrAddPage editNote = {actionWithNote} />
-     : begin && state.route === 'addNote'  ? <EditOrAddPage addNote = {actionWithNote}/>
-     : begin && state.route === 'oneNote' ? <NotePage deleteNote = {actionWithNote}/> : <Loading/>
+    begin ? <Routes>
+        <Route path="/" element={ <Home afterFilter={setNotesAfterFilter} data={notes} deleteNote={actionWithNote}/> }/>
+        <Route path="edit" element={<EditOrAddPage editNote = {actionWithNote} />}/>
+        <Route path="add" element={<EditOrAddPage addNote = {actionWithNote}/>}/>
+        <Route path="note" element={<NotePage deleteNote = {actionWithNote}/>}/>
+      </Routes>
+    : <Loading/>
   );
 }
 

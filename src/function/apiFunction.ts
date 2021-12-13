@@ -4,6 +4,13 @@ const headers = {
   'Access-Control-Allow-Origin': "*"
 }
 export async function loadAllApi(){
+  // return fetch(url)
+  //   .then(response => {
+  //     if (!response.ok) {
+  //       throw new Error(response.statusText)
+  //     }
+  //     return response.json<T>()
+  //   })
     try{
       let res = await fetch('https://job.hrvr.academy/api/notes')
       let data = await res.json() 

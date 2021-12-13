@@ -9,6 +9,7 @@ import {pencilLink, removeLink, starLink,arrowLink} from '../components/images'
 //Components
 import NavPanel from '../components/NavPanel';
 import { deleteApi } from '../function/apiFunction';
+import { Link } from 'react-router-dom';
 
 function NotePage({deleteNote}:editOrAddPageProps) {
     const ls = window.localStorage
@@ -19,16 +20,16 @@ function NotePage({deleteNote}:editOrAddPageProps) {
         <NavPanel/>
         <div className="container_edit_add flex" style={{backgroundColor:`hsl(${state.note.theme||ls.getItem(state.note.id+'')||'37,100%,72%'})`}}>
             <div className="top_note_page top_panel flex">
-                <div className="come_back flex ai_c" onClick={()=>dispatch({type:'home'})}>
+                <Link to='/' className="come_back flex ai_c">
                     <img src={arrowLink} alt="come back to home" />
                     <h2 className="fs1_06rem">На главную</h2>
-                </div>
-                <div className="field_with_action flex ai_c" onClick={()=>dispatch({type:'to_go_page_with_data',payload:{note:state.note,nameOfPage:'editNote'}})}>
+                </Link>
+                <Link to='/edit' className="field_with_action flex ai_c" onClick={()=>dispatch({type:'set_note',payload:state.note})}>
                     <h2 className="fs1_06rem">Редактировать</h2>
                     <div className='circle_with_img flex ai_c active_circle_with_img'>
                         <img src={pencilLink} alt="edit note" />
                     </div>
-                </div>
+                </Link>
                 <div className="field_with_action flex ai_c" onClick = {() => {deleteNote&&deleteNote(state.note,deleteApi)}}>
                     <h2 className="fs1_06rem ">Удалить</h2>
                     <div className='circle_with_img flex ai_c active_circle_with_img'>

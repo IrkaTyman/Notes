@@ -11,6 +11,7 @@ import {downArrowLink, plusLink,starLink} from '../components/images'
 //Components
 import Note from '../components/Note'
 import NavPanel from '../components/NavPanel'
+import { Link } from 'react-router-dom';
 
 function Home({deleteNote,afterFilter,data}:homeProps) {
     const [typeFilter,setTypeFilter] = useState('date') 
@@ -18,6 +19,13 @@ function Home({deleteNote,afterFilter,data}:homeProps) {
     const windowWidth = document.documentElement.clientWidth
     const {state,dispatch} = useContext(Context)
     const newPost:note = {id:state.lastIdOfNote+1,priority:0,title:'',description:'',theme:'37,100%,72%',creationTime:Date.now()} 
+
+    function changeFilterSort(type: 'upgrade'|'down'|'date',callback:Function,data:note[],ind?:number):void{
+      setTypeFilter(type)
+      setActiveFilterBlock(false)
+      afterFilter(ind ? callback(data,ind) :callback(data))
+    }
+
     return (
     <div className="App home_page">
       <NavPanel post={newPost}>
@@ -36,12 +44,12 @@ function Home({deleteNote,afterFilter,data}:homeProps) {
              <p className="fs1rem">Низкий</p>
           </div>
         </div>
-        <div className="new_note flex ai_c" onClick={()=> dispatch({type:'to_go_page_with_data',payload:{note:newPost,nameOfPage:'addNote'}})}>
+        <Link to='/add' className="new_note flex ai_c" onClick={()=> dispatch({type:'set_note',payload:newPost})}>
           <h2 className="fs1rem">Создать</h2>
           <div className="circle_with_img flex ai_c">
             <img src={plusLink} alt="new order" />
           </div>
-        </div>
+        </Link>
       </NavPanel>
       <main>
           <div className="container_with_filter flex ai_c">
@@ -61,27 +69,15 @@ function Home({deleteNote,afterFilter,data}:homeProps) {
                 </div>
                 <div className="mobile_sort_container flex" style={{display: (activeFilterBlock || windowWidth > 540) ? 'flex' : 'none'}}>
                   <p className="filter upgrade_filter flex ai_c" 
-                      onClick = {() => {
-                        setTypeFilter('upgrade')
-                        setActiveFilterBlock(false)
-                        afterFilter(sortByPriority(data,-1))
-                        }}>
+                      onClick = {() => {changeFilterSort('upgrade',sortByPriority,data,-1)}}>
                       По <img src={downArrowLink} alt='sort by upgrade priority'/> приоритета
                   </p>
                   <p className="filter flex ai_c" 
-                    onClick = {() => {
-                      setTypeFilter('down')
-                      setActiveFilterBlock(false)
-                      afterFilter(sortByPriority(data,1))
-                      }}>
+                    onClick = {() => {changeFilterSort('down',sortByPriority,data,1)}}>
                     По <img src={downArrowLink} alt='sort by upgrade priority'/> приоритета
                   </p>
                   <p className="filter" 
-                    onClick = {() => {
-                      setTypeFilter('date')
-                      setActiveFilterBlock(false)
-                      afterFilter(sortByDateFilter(data))
-                      }}>По дате
+                    onClick = {() => {changeFilterSort('date',sortByDateFilter,data)}}>По дате
                   </p>
                 </div>
               </div>
